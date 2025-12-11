@@ -1,5 +1,5 @@
--- Loader.lua - واجهة النظام الكامل النهائي
-print("🔗 جاري تحميل النظام الكامل...")
+-- Loader.lua - واجهة مبسطة ومستقرة
+print("🔗 جاري تحميل النظام المؤمن...")
 
 local function safeLoad(url)
     local success, result = pcall(function()
@@ -29,152 +29,83 @@ local success, err = pcall(function()
     local Interface = safeLoad("https://raw.githubusercontent.com/bwlamad03-beep/RedzUI1/main/Interface.lua")
     if not Interface then error("❌ فشل تحميل الواجهة") end
     
-    delay(0.5)
+    delay(1)
     
     -- تحميل النظام
-    print("📦 جاري تحميل النظام...")
+    print("📦 جاري تحميل النظام المؤمن...")
     local Commands = safeLoad("https://raw.githubusercontent.com/bwlamad03-beep/RedzUI1/main/Commands.lua")
     if not Commands then error("❌ فشل تحميل النظام") end
     
-    delay(0.5)
+    delay(1)
     
     -- الحصول على مستوى اللاعب
     local playerLevel = Commands.GetPlayerLevel()
     print("📊 مستوى اللاعب: " .. playerLevel)
     
-    -- تحديد الموقع المناسب
-    local bestLocation = "بداية"
-    if playerLevel >= 30 then bestLocation = "قراصنة"
-    elseif playerLevel >= 50 then bestLocation = "محاربين"
-    elseif playerLevel >= 75 then bestLocation = "بحارة" end
-    
     -- إضافة الأوامر للواجهة
     print("➕ جاري إضافة الأوامر...")
     
-    -- ==================== زر النظام المتكامل الرئيسي ====================
-    Interface.AddOption("🚀 نظام متكامل كامل", "🤖", Color3.fromRGB(255, 80, 80), function()
-        print("🚀 بدء النظام المتكامل...")
-        print("📊 مستواك: " .. playerLevel)
-        print("📍 الموقع: " .. bestLocation)
-        
-        -- بدء النظام المتكامل
+    -- زر رئيسي واحد فقط
+    Interface.AddOption("🚀 ابدأ النظام التلقائي", "🤖", Color3.fromRGB(255, 80, 80), function()
+        print("▶️ بدء النظام التلقائي...")
         Commands.StartFullSystem()
     end)
     
-    -- ==================== قسم المواقع ====================
-    Interface.AddOption("📍 الذهاب لـ " .. bestLocation, "🎯", Color3.fromRGB(100, 200, 100), function()
-        Commands.TeleportToLocation(bestLocation)
-        delay(1)
-        Commands.TakeQuest()
-        delay(1)
-        Commands.StartSmartFarm()
+    -- زر التحكم
+    Interface.AddOption("⏸️ إيقاف مؤقت", "⏸️", Color3.fromRGB(255, 180, 0), function()
+        Commands.StopAll()
     end)
     
-    Interface.AddOption("🏝️ الذهاب للبداية", "🚀", Color3.fromRGB(255, 150, 100), function()
-        Commands.TeleportToLocation("بداية")
-    end)
-    
-    Interface.AddOption("⚓ الذهاب للقراصنة", "🌊", Color3.fromRGB(100, 150, 255), function()
-        Commands.TeleportToLocation("قراصنة")
-    end)
-    
-    Interface.AddOption("⚔️ الذهاب للمحاربين", "🛡️", Color3.fromRGB(200, 100, 200), function()
-        Commands.TeleportToLocation("محاربين")
-    end)
-    
-    Interface.AddOption("👮 الذهاب للبحارة", "⚖️", Color3.fromRGB(100, 200, 255), function()
-        Commands.TeleportToLocation("بحارة")
-    end)
-    
-    -- ==================== قسم المهام ====================
-    Interface.AddOption("📝 أخذ مهمة جديدة", "📜", Color3.fromRGB(100, 200, 255), function()
-        Commands.TakeQuest()
-    end)
-    
-    Interface.AddOption("🌾 بدء/إيقاف فارم", "⚔️", Color3.fromRGB(100, 200, 100), function()
-        Commands.StartSmartFarm()
-    end)
-    
-    -- ==================== قسم التحكم ====================
-    Interface.AddOption("📊 حالة النظام", "📈", Color3.fromRGB(100, 200, 255), function()
+    -- زر الحالة
+    Interface.AddOption("📊 عرض الحالة", "📈", Color3.fromRGB(100, 200, 255), function()
         Commands.CheckStatus()
     end)
     
+    -- زر إعادة التعيين
     Interface.AddOption("🔄 إعادة تعيين", "🔄", Color3.fromRGB(200, 200, 100), function()
         Commands.ResetSystem()
     end)
     
-    Interface.AddOption("🛑 إيقاف الكل", "⏹️", Color3.fromRGB(200, 100, 100), function()
-        Commands.StopAll()
-    end)
-    
-    Interface.AddOption("💀 إعادة التولد", "⚡", Color3.fromRGB(255, 100, 100), function()
-        Commands.StopAll()
-        delay(0.5)
-        local character = game:GetService("Players").LocalPlayer.Character
-        if character then
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            if humanoid then
-                humanoid.Health = 0
-            end
-        end
-    end)
-    
-    Interface.AddOption("ℹ️ معلومات النظام", "📋", Color3.fromRGB(100, 200, 200), function()
-        print("🎮 النظام الكامل لـ Blox Fruits")
-        print("📚 الإصدار: Ultimate System 4.0")
+    -- زر المساعدة
+    Interface.AddOption("❓ المساعدة", "💡", Color3.fromRGB(100, 200, 200), function()
+        print("🎮 النظام المؤمن لـ Blox Fruits")
+        print("📚 الإصدار: Stable System 5.0")
         print("👤 المطور: Mr.Qattusa")
         print("📊 مستواك: " .. playerLevel)
-        print("📍 الموصى: " .. bestLocation)
-        print("✨ طريقة العمل:")
-        print("1. اضغط على '🚀 نظام متكامل كامل'")
-        print("2. النظام راح:")
-        print("   ├── يتلفيل للموقع المناسب")
-        print("   ├── يأخذ مهمة مناسبة")
-        print("   ├── يبدأ الفارم تلقائياً")
-        print("   └── يتابع حتى إكمال المهمة")
-        print("3. يمكنك متابعة التقدم من '📊 حالة النظام'")
+        print("✨ كيف يعمل:")
+        print("1. اضغط على '🚀 ابدأ النظام التلقائي'")
+        print("2. النظام راح يعمل كل شيء تلقائياً")
+        print("3. راقب التقدم من '📊 عرض الحالة'")
+        print("4. استخدم '⏸️ إيقاف مؤقت' للتوقف")
+        print("⚠️ النظام مؤمن ضد التوقف المفاجئ")
     end)
     
-    print("🎉 تم تحميل النظام الكامل بنجاح!")
-    print("✅ الواجهة: جاهزة")
-    print("✅ النظام: جاهز للعمل")
+    print("✅ تم تحميل النظام بنجاح!")
     print("📊 مستوى اللاعب: " .. playerLevel)
-    print("📍 الموقع الموصى: " .. bestLocation)
-    print("🚀 اضغط على '🚀 نظام متكامل كامل' للبدء التلقائي")
+    print("🚀 اضغط على 'ابدأ النظام التلقائي' للبدء")
     
-    -- إشعار الترحيب
+    -- إشعار ترحيبي
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "النظام الكامل",
-        Text = "جاهز! مستواك: " .. playerLevel,
+        Title = "النظام المؤمن",
+        Text = "جاهز! اضغط الزر الرئيسي للبدء",
         Duration = 5,
-        Icon = "🎮"
-    })
-    
-    -- إشعار التعليمات
-    delay(2)
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "كيفية الاستخدام",
-        Text = "اضغط على 'نظام متكامل كامل' للبدء",
-        Duration = 4,
-        Icon = "💡"
+        Icon = "✅"
     })
     
     return {
         Interface = Interface,
         Commands = Commands,
-        PlayerLevel = playerLevel,
-        BestLocation = bestLocation
+        PlayerLevel = playerLevel
     }
 end)
 
 if not success then
-    warn("❌ خطأ في تحميل النظام: " .. tostring(err))
+    warn("❌ خطأ في التحميل: " .. tostring(err))
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "النظام",
+        Title = "خطأ",
         Text = "فشل التحميل: " .. tostring(err),
         Duration = 5,
-        Icon = "⚠️"
+        Icon = "❌"
     })
 end
