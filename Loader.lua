@@ -1,5 +1,5 @@
--- Loader.lua - واجهة نظام فارم بلوكس فروت
-print("🔗 جاري تحميل نظام فارم بلوكس فروت...")
+-- Loader.lua - واجهة نظام التلفيل البسيط
+print("🔗 جاري تحميل نظام التلفيل...")
 
 local function safeLoad(url)
     local success, result = pcall(function()
@@ -31,94 +31,95 @@ local success, err = pcall(function()
     
     delay(0.5)
     
-    -- تحميل نظام الفارم
-    print("📦 جاري تحميل نظام الفارم...")
+    -- تحميل نظام التلفيل
+    print("📦 جاري تحميل نظام التلفيل...")
     local Commands = safeLoad("https://raw.githubusercontent.com/bwlamad03-beep/RedzUI1/main/Commands.lua")
-    if not Commands then error("❌ فشل تحميل نظام الفارم") end
+    if not Commands then error("❌ فشل تحميل نظام التلفيل") end
     
     delay(0.5)
     
-    -- إضافة أوامر الفارم للواجهة
-    print("➕ جاري إضافة أوامر بلوكس فروت...")
+    -- إضافة أوامر التلفيل للواجهة
+    print("➕ جاري إضافة أوامر التلفيل...")
     
-    -- ==================== قسم التحكم الرئيسي ====================
-    Interface.AddOption("🚀 بدء/إيقاف الفارم", "⚔️", Color3.fromRGB(255, 80, 80), function()
-        Commands.StartBloxFruitsFarm()
+    -- ==================== قسم الجزر الرئيسية ====================
+    Interface.AddOption("🏝️ جزيرة البداية", "📍", Color3.fromRGB(100, 200, 100), function()
+        Commands.TeleportToIsland("بداية")
     end)
     
-    Interface.AddOption("🔀 تبديل وضع الفارم", "👑", Color3.fromRGB(255, 180, 0), function()
-        Commands.ToggleFarmMode()
+    Interface.AddOption("🏝️ مدينة القراصنة", "⚓", Color3.fromRGB(200, 100, 100), function()
+        Commands.TeleportToIsland("مدينة القراصنة")
     end)
     
-    Interface.AddOption("📊 حالة النظام", "📈", Color3.fromRGB(100, 200, 255), function()
-        Commands.GetFarmingStatus()
+    Interface.AddOption("🏝️ قرية المحاربين", "⚔️", Color3.fromRGB(100, 150, 255), function()
+        Commands.TeleportToIsland("قرية المحاربين")
     end)
     
-    -- ==================== قسم الإعدادات ====================
-    Interface.AddOption("🦅 ارتفاع الطيران: 30", "📏", Color3.fromRGB(150, 220, 255), function()
-        Commands.SetFlyingHeight(30)
+    Interface.AddOption("🏝️ مدينة البحارة", "👮", Color3.fromRGB(100, 200, 255), function()
+        Commands.TeleportToIsland("مدينة البحارة")
     end)
     
-    Interface.AddOption("🦅 ارتفاع الطيران: 50", "⬆️", Color3.fromRGB(120, 200, 255), function()
-        Commands.SetFlyingHeight(50)
+    Interface.AddOption("🏝️ السجن", "🔒", Color3.fromRGB(150, 150, 150), function()
+        Commands.TeleportToIsland("سجن")
     end)
     
-    Interface.AddOption("🔍 نطاق البحث: 100", "🎯", Color3.fromRGB(200, 150, 255), function()
-        Commands.SetSearchRadius(100)
+    -- ==================== قسم البوسات ====================
+    Interface.AddOption("👑 الملك غوريلا", "🦍", Color3.fromRGB(150, 100, 50), function()
+        Commands.TeleportToBoss("الملك غوريلا")
     end)
     
-    Interface.AddOption("🔍 نطاق البحث: 200", "🔭", Color3.fromRGB(180, 130, 255), function()
-        Commands.SetSearchRadius(200)
+    Interface.AddOption("👑 بوبي", "🤡", Color3.fromRGB(255, 100, 100), function()
+        Commands.TeleportToBoss("بوبي")
+    end)
+    
+    Interface.AddOption("👑 قائد القراصنة", "☠️", Color3.fromRGB(200, 150, 50), function()
+        Commands.TeleportToBoss("قائد القراصنة")
+    end)
+    
+    Interface.AddOption("👑 القرش", "🦈", Color3.fromRGB(100, 150, 200), function()
+        Commands.TeleportToBoss("القرش")
     end)
     
     -- ==================== قسم الخدمات ====================
-    Interface.AddOption("📍 تلفيل للبداية", "🏠", Color3.fromRGB(100, 255, 150), function()
-        Commands.TeleportToSpawn()
+    Interface.AddOption("🎯 قبول المهام", "📜", Color3.fromRGB(255, 200, 100), function()
+        Commands.TeleportToQuestNPC()
     end)
     
-    Interface.AddOption("🔄 إعادة التولد", "💀", Color3.fromRGB(255, 100, 100), function()
-        local character = game:GetService("Players").LocalPlayer.Character
-        if character then
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            if humanoid then
-                humanoid.Health = 0
-            end
-        end
+    Interface.AddOption("📍 موقعي الحالي", "📊", Color3.fromRGB(100, 200, 200), function()
+        Commands.ShowCurrentPosition()
     end)
     
-    Interface.AddOption("🧹 تنظيف النظام", "🗑️", Color3.fromRGB(200, 100, 100), function()
-        Commands.Cleanup()
+    Interface.AddOption("📋 نسخ الموقع", "📝", Color3.fromRGB(200, 200, 100), function()
+        Commands.CopyPosition()
     end)
     
-    Interface.AddOption("ℹ️ معلومات النظام", "📋", Color3.fromRGB(100, 200, 200), function()
-        print("🏝️ نظام فارم بلوكس فروت")
-        print("📚 الإصدار: Blox Fruits Farmer 4.0")
-        print("👤 المطور: Mr.Qattusa")
-        print("✨ المميزات:")
-        print("├── فارم تلقائي للـ NPCs")
-        print("├── صيد البوسات الأقوياء")
-        print("├── طيران متقدم فوق الأهداف")
-        print("├── هجوم بالمهارات تلقائي")
-        print("└── إعدادات متعددة")
+    Interface.AddOption("📍 قائمة المواقع", "📋", Color3.fromRGB(150, 150, 255), function()
+        Commands.ListLocations()
     end)
     
-    print("🎉 تم تحميل نظام فارم بلوكس فروت!")
+    Interface.AddOption("🛡️ منطقة آمنة", "🏠", Color3.fromRGB(100, 255, 100), function()
+        Commands.GoToSafeZone()
+    end)
+    
+    Interface.AddOption("🌊 البحر", "💧", Color3.fromRGB(100, 150, 255), function()
+        Commands.GoToSea()
+    end)
+    
+    print("🎉 تم تحميل نظام التلفيل بنجاح!")
     print("✅ الواجهة: جاهزة")
-    print("✅ النظام: جاهز للعمل")
-    print("🚀 اضغط على 'بدء/إيقاف الفارم' للبدء")
-    print("⚙️ يمكنك تغيير الإعدادات من القائمة")
+    print("✅ التلفيل: 15 موقع متاح")
+    print("🚀 اضغط على أي موقع للانتقال إليه فوراً")
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Blox Fruits Farmer",
-        Text = "جاهز للعمل! ابدأ الفارم الآن",
+        Title = "نظام التلفيل",
+        Text = "جاهز! اختر موقعاً من القائمة",
         Duration = 5,
-        Icon = "⚔️"
+        Icon = "📍"
     })
     
     return {
         Interface = Interface,
         Commands = Commands,
-        Version = "Blox Fruits Farmer 4.0"
+        Version = "Teleport System 1.0"
     }
 end)
 
@@ -126,7 +127,7 @@ if not success then
     warn("❌ خطأ في تحميل النظام: " .. tostring(err))
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Blox Fruits Farmer",
+        Title = "نظام التلفيل",
         Text = "فشل التحميل: " .. tostring(err),
         Duration = 5,
         Icon = "⚠️"
