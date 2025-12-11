@@ -1,8 +1,6 @@
 -- Interface.lua - واجهة Redz Style فقط بدون أوامر
--- رابط: loadstring(game:HttpGet("https://raw.githubusercontent.com/اسمك/RedzUI/main/Interface.lua"))()
-
 local RedzUI = {}
-RedzUI.Version = "Interface 2.0"
+RedzUI.Version = "Interface 3.0"
 RedzUI.Author = "Mr.Qattusa"
 
 -- مكتبات النظام
@@ -18,9 +16,9 @@ RedzUI.OptionsList = {}
 -- دالة تأخير متوافقة
 local function delay(time)
     if task then
-        return task.wait(time)
+        task.wait(time)
     else
-        return wait(time)
+        wait(time)
     end
 end
 
@@ -43,6 +41,8 @@ function RedzUI.Create()
             syn.protect_gui(ScreenGui)
         elseif gethui then
             ScreenGui.Parent = gethui()
+        else
+            ScreenGui.Parent = game:GetService("CoreGui")
         end
         
         -- القط الرئيسي (زر التبديل)
@@ -208,13 +208,6 @@ function RedzUI.Create()
         -- إضافة العناصر
         MainButton.Parent = ScreenGui
         MainFrame.Parent = ScreenGui
-        
-        -- إضافة للعبة
-        if gethui then
-            ScreenGui.Parent = gethui()
-        else
-            ScreenGui.Parent = game:GetService("CoreGui")
-        end
         
         -- حفظ المرجع
         RedzUI.MainGUI = ScreenGui
