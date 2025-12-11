@@ -1,6 +1,4 @@
 -- Commands.lua - أوامر Redz Style فقط بدون واجهة
--- رابط: loadstring(game:HttpGet("https://raw.githubusercontent.com/اسمك/RedzUI/main/Commands.lua"))()
-
 local RedzCommands = {}
 RedzCommands.Version = "Commands 2.0"
 RedzCommands.Author = "Mr.Qattusa"
