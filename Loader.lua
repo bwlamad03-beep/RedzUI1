@@ -1,5 +1,5 @@
--- Loader.lua - محمل نظام RedzUI الكامل
-print("🔗 جاري تحميل Mr.Qattusa System...")
+-- Loader.lua - واجهة نظام فارم بلوكس فروت
+print("🔗 جاري تحميل نظام فارم بلوكس فروت...")
 
 local function safeLoad(url)
     local success, result = pcall(function()
@@ -31,75 +31,94 @@ local success, err = pcall(function()
     
     delay(0.5)
     
-    -- تحميل الأوامر
-    print("📦 جاري تحميل الأوامر...")
+    -- تحميل نظام الفارم
+    print("📦 جاري تحميل نظام الفارم...")
     local Commands = safeLoad("https://raw.githubusercontent.com/bwlamad03-beep/RedzUI1/main/Commands.lua")
-    if not Commands then error("❌ فشل تحميل الأوامر") end
+    if not Commands then error("❌ فشل تحميل نظام الفارم") end
     
     delay(0.5)
     
-    -- إضافة الأوامر للواجهة
-    print("➕ جاري إضافة الأوامر للواجهة...")
+    -- إضافة أوامر الفارم للواجهة
+    print("➕ جاري إضافة أوامر بلوكس فروت...")
     
-    -- مجموعة أوامر الحركة
-    Interface.AddOption("السرعة ×2", "🚀", Color3.fromRGB(200, 100, 255), function()
-        Commands.Speed(100)
+    -- ==================== قسم التحكم الرئيسي ====================
+    Interface.AddOption("🚀 بدء/إيقاف الفارم", "⚔️", Color3.fromRGB(255, 80, 80), function()
+        Commands.StartBloxFruitsFarm()
     end)
     
-    Interface.AddOption("القفزة ×2", "🐰", Color3.fromRGB(255, 150, 100), function()
-        Commands.Jump(100)
+    Interface.AddOption("🔀 تبديل وضع الفارم", "👑", Color3.fromRGB(255, 180, 0), function()
+        Commands.ToggleFarmMode()
     end)
     
-    Interface.AddOption("الطيران", "🦅", Color3.fromRGB(100, 200, 255), function()
-        Commands.Fly()
+    Interface.AddOption("📊 حالة النظام", "📈", Color3.fromRGB(100, 200, 255), function()
+        Commands.GetFarmingStatus()
     end)
     
-    Interface.AddOption("النوكلب", "👻", Color3.fromRGB(150, 150, 255), function()
-        Commands.Noclip()
+    -- ==================== قسم الإعدادات ====================
+    Interface.AddOption("🦅 ارتفاع الطيران: 30", "📏", Color3.fromRGB(150, 220, 255), function()
+        Commands.SetFlyingHeight(30)
     end)
     
-    -- مجموعة أوامر اللعبة
-    Interface.AddOption("تلفيل للاعب قريب", "🎯", Color3.fromRGB(100, 255, 150), function()
-        Commands.TeleportTo("") -- هيشتغل مع الواجهة المعدلة
+    Interface.AddOption("🦅 ارتفاع الطيران: 50", "⬆️", Color3.fromRGB(120, 200, 255), function()
+        Commands.SetFlyingHeight(50)
     end)
     
-    Interface.AddOption("نسخ الموقع", "📋", Color3.fromRGB(255, 200, 100), function()
-        Commands.CopyPosition()
+    Interface.AddOption("🔍 نطاق البحث: 100", "🎯", Color3.fromRGB(200, 150, 255), function()
+        Commands.SetSearchRadius(100)
     end)
     
-    Interface.AddOption("ESP (رؤية)", "👁️", Color3.fromRGB(150, 200, 255), function()
-        Commands.ESP()
+    Interface.AddOption("🔍 نطاق البحث: 200", "🔭", Color3.fromRGB(180, 130, 255), function()
+        Commands.SetSearchRadius(200)
     end)
     
-    -- مجموعة أوامر النظام
-    Interface.AddOption("إعادة التولد", "🔄", Color3.fromRGB(255, 150, 100), function()
-        Commands.Refresh()
+    -- ==================== قسم الخدمات ====================
+    Interface.AddOption("📍 تلفيل للبداية", "🏠", Color3.fromRGB(100, 255, 150), function()
+        Commands.TeleportToSpawn()
     end)
     
-    Interface.AddOption("حالة النظام", "📊", Color3.fromRGB(100, 200, 200), function()
-        Commands.GetStatus()
+    Interface.AddOption("🔄 إعادة التولد", "💀", Color3.fromRGB(255, 100, 100), function()
+        local character = game:GetService("Players").LocalPlayer.Character
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.Health = 0
+            end
+        end
     end)
     
-    Interface.AddOption("تنظيف النظام", "🧹", Color3.fromRGB(200, 100, 100), function()
+    Interface.AddOption("🧹 تنظيف النظام", "🗑️", Color3.fromRGB(200, 100, 100), function()
         Commands.Cleanup()
     end)
     
-    print("🎉 تم تحميل النظام بالكامل!")
+    Interface.AddOption("ℹ️ معلومات النظام", "📋", Color3.fromRGB(100, 200, 200), function()
+        print("🏝️ نظام فارم بلوكس فروت")
+        print("📚 الإصدار: Blox Fruits Farmer 4.0")
+        print("👤 المطور: Mr.Qattusa")
+        print("✨ المميزات:")
+        print("├── فارم تلقائي للـ NPCs")
+        print("├── صيد البوسات الأقوياء")
+        print("├── طيران متقدم فوق الأهداف")
+        print("├── هجوم بالمهارات تلقائي")
+        print("└── إعدادات متعددة")
+    end)
+    
+    print("🎉 تم تحميل نظام فارم بلوكس فروت!")
     print("✅ الواجهة: جاهزة")
-    print("✅ الأوامر: 10 أوامر")
-    print("🚀 النظام جاهز للاستخدام!")
+    print("✅ النظام: جاهز للعمل")
+    print("🚀 اضغط على 'بدء/إيقاف الفارم' للبدء")
+    print("⚙️ يمكنك تغيير الإعدادات من القائمة")
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Mr.Qattusa System",
-        Text = "تم التحميل بنجاح! اضغط RCtrl لفتح القائمة",
+        Title = "Blox Fruits Farmer",
+        Text = "جاهز للعمل! ابدأ الفارم الآن",
         Duration = 5,
-        Icon = "🐱"
+        Icon = "⚔️"
     })
     
     return {
         Interface = Interface,
         Commands = Commands,
-        Version = "2.0"
+        Version = "Blox Fruits Farmer 4.0"
     }
 end)
 
@@ -107,7 +126,7 @@ if not success then
     warn("❌ خطأ في تحميل النظام: " .. tostring(err))
     
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Mr.Qattusa System",
+        Title = "Blox Fruits Farmer",
         Text = "فشل التحميل: " .. tostring(err),
         Duration = 5,
         Icon = "⚠️"
